@@ -39,7 +39,7 @@ public class UserCrudController {
 				
 				}
 				// http://localhost:4023/SpringMVC/servlet/modify-user
-				@PutMapping("/modify-user")
+				@PutMapping(value = "/modify-user")
 				@ResponseBody
 				public User modifyUser(@RequestBody User user) {
 				return service.updateUser(user);
