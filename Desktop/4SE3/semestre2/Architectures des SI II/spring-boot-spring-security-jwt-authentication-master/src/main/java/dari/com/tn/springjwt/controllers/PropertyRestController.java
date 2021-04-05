@@ -50,11 +50,11 @@ public class PropertyRestController {
 	propService.deleteProp(propId);;
 	}
 
-	// http://localhost:6000/SpringMVC/servlet/modify-user
-	//@RequestMapping(value = "/modify-user",method = RequestMethod.PUT)
-	//@ResponseBody
-	//public Property modifyUser(@RequestBody Property prop) {
-	//return propService.updateProp(prop);
+	 //http://localhost:6000/SpringMVC/servlet/modify-user
+	@RequestMapping(value = "/modify-prop",method = RequestMethod.PUT)
+	@ResponseBody
+	public Property modifyUser(@RequestBody Property prop) {
+	return propService.updateProp(prop);
 	}
-
+}
 

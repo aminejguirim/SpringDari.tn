@@ -21,7 +21,7 @@ public class TestController {
 		return "User Content.";
 	}
 
-	@GetMapping("/mod")
+	@GetMapping("/client")
 	@PreAuthorize("hasRole('CLIENT')")
 	public String clientAccess() {
 		return "Client Board.";
