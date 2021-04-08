@@ -75,9 +75,7 @@ public class AuthController {
         this.applicationEventPublisher = applicationEventPublisher;
     }
 
-    /**
-     * Checks is a given email is in use or not.
-     */
+    
     @ApiOperation(value = "Checks if the given email is in use")
     @GetMapping("/checkEmailInUse")
     public ResponseEntity checkEmailInUse(@ApiParam(value = "Email id to check against") @RequestParam("email") String email) {
@@ -85,9 +83,7 @@ public class AuthController {
         return ResponseEntity.ok(new ApiResponse(true, emailExists.toString()));
     }
 
-    /**
-     * Checks is a given username is in use or not.
-     */
+    
     @ApiOperation(value = "Checks if the given username is in use")
     @GetMapping("/checkUsernameInUse")
     public ResponseEntity checkUsernameInUse(@ApiParam(value = "Username to check against") @RequestParam(
@@ -97,9 +93,7 @@ public class AuthController {
     }
 
 
-    /**
-     * Entry point for the user log in. Return the jwt auth token and the refresh token
-     */
+    
     @PostMapping("/login")
     @ApiOperation(value = "Logs the user in to the system and return the auth tokens")
     public ResponseEntity authenticateUser(@ApiParam(value = "The LoginRequest payload") @Valid @RequestBody LoginRequest loginRequest) {
@@ -120,10 +114,7 @@ public class AuthController {
                 .orElseThrow(() -> new UserLoginException("Couldn't create refresh token for: [" + loginRequest + "]"));
     }
 
-    /**
-     * Entry point for the user registration process. On successful registration,
-     * publish an event to generate email verification token
-     */
+   
     @PostMapping("/register")
     @ApiOperation(value = "Registers the user and publishes an event to generate the email verification")
     public ResponseEntity registerUser(@ApiParam(value = "The RegistrationRequest payload") @Valid @RequestBody RegistrationRequest registrationRequest) {
@@ -139,11 +130,7 @@ public class AuthController {
                 .orElseThrow(() -> new UserRegistrationException(registrationRequest.getEmail(), "Missing user object in database"));
     }
 
-    /**
-     * Receives the reset link request and publishes an event to send email id containing
-     * the reset link if the request is valid. In future the deeplink should open within
-     * the app itself.
-     */
+    
     @PostMapping("/password/resetlink")
     @ApiOperation(value = "Receive the reset link request and publish event to send mail containing the password " +
             "reset link")
@@ -160,10 +147,7 @@ public class AuthController {
                 .orElseThrow(() -> new PasswordResetLinkException(passwordResetLinkRequest.getEmail(), "Couldn't create a valid token"));
     }
 
-    /**
-     * Receives a new passwordResetRequest and sends the acknowledgement after
-     * changing the password to the user's mail through the event.
-     */
+    
 
     @PostMapping("/password/reset")
     @ApiOperation(value = "Reset the password after verification and publish an event to send the acknowledgement " +
@@ -180,10 +164,7 @@ public class AuthController {
                 .orElseThrow(() -> new PasswordResetException(passwordResetRequest.getToken(), "Error in resetting password"));
     }
 
-    /**
-     * Confirm the email verification token generated for the user during
-     * registration. If token is invalid or token is expired, report error.
-     */
+  
     @GetMapping("/registrationConfirmation")
     @ApiOperation(value = "Confirms the email verification token that has been generated for the user during registration")
     public ResponseEntity confirmRegistration(@ApiParam(value = "the token that was sent to the user email") @RequestParam("token") String token) {
@@ -193,12 +174,7 @@ public class AuthController {
                 .orElseThrow(() -> new InvalidTokenRequestException("Email Verification Token", token, "Failed to confirm. Please generate a new email verification request"));
     }
 
-    /**
-     * Resend the email registration mail with an updated token expiry. Safe to
-     * assume that the user would always click on the last re-verification email and
-     * any attempts at generating new token from past (possibly archived/deleted)
-     * tokens should fail and report an exception.
-     */
+    
     @GetMapping("/resendRegistrationToken")
     @ApiOperation(value = "Resend the email registration with an updated token expiry. Safe to " +
             "assume that the user would always click on the last re-verification email and " +
@@ -219,10 +195,7 @@ public class AuthController {
                 .orElseThrow(() -> new InvalidTokenRequestException("Email Verification Token", existingToken, "No user associated with this request. Re-verification denied"));
     }
 
-    /**
-     * Refresh the expired jwt token using a refresh token for the specific device
-     * and return a new token to the caller
-     */
+    
     @PostMapping("/refresh")
     @ApiOperation(value = "Refresh the expired jwt authentication by issuing a token refresh request and returns the" +
             "updated response tokens")

@@ -26,15 +26,6 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-/**
- * This cache helps maintain a state to invalidate tokens post a successful logout operation.
- * Since JWT tokens are immutable, they'd still remain accessible post logout as long as the token
- * doesn't expire.
- * <p>
- * Note: To prevent this cache from building up indefinitely, we set a max size. The TTL for each
- * token will be the number of seconds that remain until its expiry. This is done as an optimization
- * as once a JWT token expires, it cannot be used anyway.
- */
 @Component
 public class LoggedOutJwtTokenCache {
 

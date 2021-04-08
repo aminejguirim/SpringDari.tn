@@ -39,19 +39,13 @@ public class OnUserAccountChangeListener implements ApplicationListener<OnUserAc
         this.mailService = mailService;
     }
 
-    /**
-     * As soon as a registration event is complete, invoke the email verification
-     * asynchronously in an another thread pool
-     */
     @Override
     @Async
     public void onApplicationEvent(OnUserAccountChangeEvent onUserAccountChangeEvent) {
         sendAccountChangeEmail(onUserAccountChangeEvent);
     }
 
-    /**
-     * Send email verification to the user and persist the token in the database.
-     */
+    
     private void sendAccountChangeEmail(OnUserAccountChangeEvent event) {
         User user = event.getUser();
         String action = event.getAction();

@@ -42,19 +42,14 @@ public class OnUserRegistrationCompleteListener implements ApplicationListener<O
         this.mailService = mailService;
     }
 
-    /**
-     * As soon as a registration event is complete, invoke the email verification
-     * asynchronously in an another thread pool
-     */
+    
     @Override
     @Async
     public void onApplicationEvent(OnUserRegistrationCompleteEvent onUserRegistrationCompleteEvent) {
         sendEmailVerification(onUserRegistrationCompleteEvent);
     }
 
-    /**
-     * Send email verification to the user and persist the token in the database.
-     */
+    
     private void sendEmailVerification(OnUserRegistrationCompleteEvent event) {
         User user = event.getUser();
         String token = emailVerificationTokenService.generateNewToken();

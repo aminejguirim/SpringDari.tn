@@ -62,9 +62,7 @@ public class UserController {
         this.applicationEventPublisher = applicationEventPublisher;
     }
 
-    /**
-     * Gets the current user profile of the logged in user
-     */
+    
     @GetMapping("/me")
     @PreAuthorize("hasRole('USER')")
     @ApiOperation(value = "Returns the current user profile")
@@ -73,9 +71,7 @@ public class UserController {
         return ResponseEntity.ok("Hello. This is about me");
     }
 
-    /**
-     * Returns all admins in the system. Requires Admin access
-     */
+    
     @GetMapping("/admins")
     @PreAuthorize("hasRole('ADMIN')")
     @ApiOperation(value = "Returns the list of configured admins. Requires ADMIN Access")
@@ -84,9 +80,7 @@ public class UserController {
         return ResponseEntity.ok("Hello. This is about admins");
     }
 
-    /**
-     * Updates the password of the current logged in user
-     */
+    
     @PostMapping("/password/update")
     @PreAuthorize("hasRole('USER')")
     @ApiOperation(value = "Allows the user to change his password once logged in by supplying the correct current " +
@@ -103,10 +97,7 @@ public class UserController {
                 .orElseThrow(() -> new UpdatePasswordException("--Empty--", "No such user present."));
     }
 
-    /**
-     * Log the user out from the app/device. Release the refresh token associated with the
-     * user device.
-     */
+    
     @PostMapping("/logout")
     @ApiOperation(value = "Logs the specified user device and clears the refresh tokens associated with it")
     public ResponseEntity logoutUser(@CurrentUser CustomUserDetails customUserDetails,
